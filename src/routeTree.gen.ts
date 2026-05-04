@@ -9,38 +9,172 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTransactRouteImport } from './routes/app.transact'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSaveRouteImport } from './routes/app.save'
+import { Route as AppBorrowRouteImport } from './routes/app.borrow'
+import { Route as AppAccountsRouteImport } from './routes/app.accounts'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransactRoute = AppTransactRouteImport.update({
+  id: '/transact',
+  path: '/transact',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSaveRoute = AppSaveRouteImport.update({
+  id: '/save',
+  path: '/save',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBorrowRoute = AppBorrowRouteImport.update({
+  id: '/borrow',
+  path: '/borrow',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAccountsRoute = AppAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/transact': typeof AppTransactRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/transact': typeof AppTransactRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/transact': typeof AppTransactRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/login'
+    | '/register'
+    | '/app/accounts'
+    | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
+    | '/app/transact'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/app/accounts'
+    | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
+    | '/app/transact'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/login'
+    | '/register'
+    | '/app/accounts'
+    | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
+    | '/app/transact'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +182,77 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/transact': {
+      id: '/app/transact'
+      path: '/transact'
+      fullPath: '/app/transact'
+      preLoaderRoute: typeof AppTransactRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/save': {
+      id: '/app/save'
+      path: '/save'
+      fullPath: '/app/save'
+      preLoaderRoute: typeof AppSaveRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/borrow': {
+      id: '/app/borrow'
+      path: '/borrow'
+      fullPath: '/app/borrow'
+      preLoaderRoute: typeof AppBorrowRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/accounts': {
+      id: '/app/accounts'
+      path: '/accounts'
+      fullPath: '/app/accounts'
+      preLoaderRoute: typeof AppAccountsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAccountsRoute: typeof AppAccountsRoute
+  AppBorrowRoute: typeof AppBorrowRoute
+  AppSaveRoute: typeof AppSaveRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTransactRoute: typeof AppTransactRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAccountsRoute: AppAccountsRoute,
+  AppBorrowRoute: AppBorrowRoute,
+  AppSaveRoute: AppSaveRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTransactRoute: AppTransactRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
