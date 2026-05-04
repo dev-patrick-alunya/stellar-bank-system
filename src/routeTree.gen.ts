@@ -15,6 +15,8 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppTransactRouteImport } from './routes/app.transact'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSaveRouteImport } from './routes/app.save'
 import { Route as AppBorrowRouteImport } from './routes/app.borrow'
 import { Route as AppAccountsRouteImport } from './routes/app.accounts'
 
@@ -48,6 +50,16 @@ const AppTransactRoute = AppTransactRouteImport.update({
   path: '/transact',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSaveRoute = AppSaveRouteImport.update({
+  id: '/save',
+  path: '/save',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppBorrowRoute = AppBorrowRouteImport.update({
   id: '/borrow',
   path: '/borrow',
@@ -66,6 +78,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/transact': typeof AppTransactRoute
   '/app/': typeof AppIndexRoute
 }
@@ -75,6 +89,8 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/transact': typeof AppTransactRoute
   '/app': typeof AppIndexRoute
 }
@@ -86,6 +102,8 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/borrow': typeof AppBorrowRoute
+  '/app/save': typeof AppSaveRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/transact': typeof AppTransactRoute
   '/app/': typeof AppIndexRoute
 }
@@ -98,6 +116,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/accounts'
     | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
     | '/app/transact'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -107,6 +127,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/accounts'
     | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
     | '/app/transact'
     | '/app'
   id:
@@ -117,6 +139,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/accounts'
     | '/app/borrow'
+    | '/app/save'
+    | '/app/settings'
     | '/app/transact'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -172,6 +196,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTransactRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/save': {
+      id: '/app/save'
+      path: '/save'
+      fullPath: '/app/save'
+      preLoaderRoute: typeof AppSaveRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/borrow': {
       id: '/app/borrow'
       path: '/borrow'
@@ -192,6 +230,8 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAccountsRoute: typeof AppAccountsRoute
   AppBorrowRoute: typeof AppBorrowRoute
+  AppSaveRoute: typeof AppSaveRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppTransactRoute: typeof AppTransactRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -199,6 +239,8 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAccountsRoute: AppAccountsRoute,
   AppBorrowRoute: AppBorrowRoute,
+  AppSaveRoute: AppSaveRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppTransactRoute: AppTransactRoute,
   AppIndexRoute: AppIndexRoute,
 }
